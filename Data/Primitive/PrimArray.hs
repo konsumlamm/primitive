@@ -1179,7 +1179,7 @@ createPrimArray n f = runPrimArray $ do
 -- Note: This could be implemented with 'keepAlive' instead of
 -- 'keepAliveUnlifted', but 'keepAlive' here would cause GHC to materialize
 -- the wrapper data constructor on the heap.
-withPrimArrayContents :: PrimBase m => PrimArray a -> (Ptr a -> m a) -> m a
+withPrimArrayContents :: PrimBase m => PrimArray a -> (Ptr a -> m b) -> m b
 {-# INLINE withPrimArrayContents #-}
 withPrimArrayContents (PrimArray arr#) f =
   keepAliveUnlifted arr# (f (Ptr (byteArrayContents# arr#)))
@@ -1188,7 +1188,7 @@ withPrimArrayContents (PrimArray arr#) f =
 -- The callback function must not return the pointer. The argument
 -- array must be /pinned/. See 'primArrayContents' for an explanation
 -- of which primitive arrays are pinned.
-withMutablePrimArrayContents :: PrimBase m => MutablePrimArray (PrimState m) a -> (Ptr a -> m a) -> m a
+withMutablePrimArrayContents :: PrimBase m => MutablePrimArray (PrimState m) a -> (Ptr a -> m b) -> m b
 {-# INLINE withMutablePrimArrayContents #-}
 withMutablePrimArrayContents (MutablePrimArray arr#) f =
   keepAliveUnlifted arr# (f (Ptr (mutableByteArrayContentsShim arr#)))
