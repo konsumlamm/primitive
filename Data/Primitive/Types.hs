@@ -7,10 +7,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-#if __GLASGOW_HASKELL__ < 906
-{-# LANGUAGE TypeInType #-}
-#endif
-
 #include "HsBaseConfig.h"
 
 -- |
